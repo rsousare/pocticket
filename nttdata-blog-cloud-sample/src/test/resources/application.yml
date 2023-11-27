@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    appId: nttdata-blog-cloud-sample
+  datasource:
+    url: jdbc:h2:mem:blog_db;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  cache: simple
+nttdata-blog-cloud-sample:
+  base:
+    name: /v1/blog-service
+    name-hello-world-sevice: /v1/blog-service/hello-world
+    name-authors-service: /v1/blog-service/authors
