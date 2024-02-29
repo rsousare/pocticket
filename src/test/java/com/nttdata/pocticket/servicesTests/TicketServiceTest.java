@@ -5,6 +5,7 @@ import com.nttdata.pocticket.model.entity.Project;
 import com.nttdata.pocticket.model.entity.Ticket;
 import com.nttdata.pocticket.model.enums.TicketPriority;
 import com.nttdata.pocticket.model.enums.TicketStatus;
+import com.nttdata.pocticket.model.enums.TicketType;
 import com.nttdata.pocticket.repositories.PeopleRepository;
 import com.nttdata.pocticket.repositories.ProjectRepository;
 import com.nttdata.pocticket.repositories.TicketRepository;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,17 +62,16 @@ public class TicketServiceTest {
     @Test
     public void updateTicketTest(){
         Long id = 1L;
-        Ticket existingTicket = mock(Ticket.class);
-        Ticket updatedTicket = new Ticket(existingTicket.getId(), existingTicket.getTitle(), "Update Title",
-                existingTicket.getStatus(), existingTicket.getType(), TicketPriority.HIGH, 20, existingTicket.getEstimate(),
-                existingTicket.getCreatedAt(), existingTicket.getProject(), existingTicket.getAssignedTo(), existingTicket.getCreatedBy(),
-                existingTicket.getResolvedAt(),existingTicket.getResolvedBy());
+        Ticket existingTicket = new Ticket(id, "Original Title", "Original Description", TicketStatus.NEW, TicketType.OTHER,
+                TicketPriority.LOW, 0, 10, LocalDateTime.now(), null, null, null, null, null);
+        Ticket updatedTicket = new Ticket(id, "Updated Title", "Original Description", TicketStatus.NEW, TicketType.OTHER,
+                TicketPriority.HIGH, 20, 10, LocalDateTime.now(), null, null, null, null, null);
 
 
         when(ticketRepository.findById(id)).thenReturn(Optional.of(existingTicket));
-        when(ticketRepository.save(existingTicket)).thenReturn(existingTicket);
+        when(ticketRepository.save(existingTicket)).thenReturn(updatedTicket);
 
-        Ticket result = ticketService.updateTicket(id, updatedTicket);
+        Ticket result = ticketService.updateTicket(updatedTicket);
 
         assertNotNull(result);
         assertEquals(updatedTicket.getTitle(), result.getTitle());

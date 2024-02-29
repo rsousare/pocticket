@@ -67,11 +67,11 @@ public class ProjectControllerTest {
     public void updateProjectTest(){
         Long id = 1L;
         Project existingProject = mock(Project.class);
-        when(projectService.updateProject(id, existingProject)).thenReturn(existingProject);
+        when(projectService.updateProject(existingProject)).thenReturn(existingProject);
 
-        Project updatedProject = projectController.updateProject(id, existingProject);
+        Project updatedProject = projectController.updateProject(existingProject);
         assertEquals(existingProject, updatedProject);
-        verify(projectService).updateProject(id, existingProject);
+        verify(projectService).updateProject(existingProject);
     }
 
     @Test

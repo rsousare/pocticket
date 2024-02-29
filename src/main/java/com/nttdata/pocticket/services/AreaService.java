@@ -45,20 +45,19 @@ public class AreaService {
 
     /**
      * Updates an existing area.
-     * @param areaId The ID of the area to be updated.
      * @param newArea The new area with updated data.
      * @return The updated area.
      * @throws EntityNotFoundException If the area is not found.
      */
-    public Area updateArea(Long areaId, Area newArea){
-        Optional<Area> areaOptional = areaRepository.findById(areaId);
+    public Area updateArea(Area newArea){
+        Optional<Area> areaOptional = areaRepository.findById(newArea.getId());
         if (areaOptional.isPresent()){
             Area existingArea = areaOptional.get();
             existingArea.setName(newArea.getName());
             existingArea.setDescription(newArea.getDescription());
             return areaRepository.save(existingArea);
         }else {
-            throw new EntityNotFoundException("Area with ID " + areaId + " not found!");
+            throw new EntityNotFoundException("Area with ID " + newArea.getId() + " not found!");
         }
     }
 

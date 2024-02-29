@@ -29,8 +29,8 @@ public class PeopleController {
     }
 
     @PutMapping("/{id}")
-    public People updatePeople(@PathVariable Long id, @RequestBody People people){
-        return peopleService.updatePeople(id, people);
+    public People updatePeople(@RequestBody People people){
+        return peopleService.updatePeople(people);
     }
 
     @DeleteMapping("/{id}")

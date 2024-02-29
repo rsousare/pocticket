@@ -2,8 +2,8 @@ package com.nttdata.pocticket.controllersTests;
 
 
 import com.nttdata.pocticket.controller.TicketController;
+import com.nttdata.pocticket.model.entity.Project;
 import com.nttdata.pocticket.model.entity.Ticket;
-
 import com.nttdata.pocticket.model.enums.TicketPriority;
 import com.nttdata.pocticket.services.TicketService;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,14 +63,20 @@ public class TicketControllerTest {
 
     @Test
     public void createTicketTest(){
-        Ticket mocktTicket = new Ticket();
-        when(ticketService.createTicket(mocktTicket)).thenReturn(mocktTicket);
+        Ticket newTicket = new Ticket();
+        newTicket.setTitle("New ticket");
+        newTicket.setDescription("New description");
 
-        Ticket createdTicket = ticketController.createTicket(mocktTicket);
+        Project project = new Project();
+        project.setId(1L);
+        newTicket.setProject(project);
 
-        assertNotNull(createdTicket);
-        assertEquals(mocktTicket, createdTicket);
-        verify(ticketService).createTicket(mocktTicket);
+        when(ticketService.createTicket(any(Ticket.class))).thenReturn(newTicket);
+
+        Ticket createdTicket = ticketController.createTicket(newTicket);
+
+        assertEquals(newTicket, createdTicket);
+        verify(ticketService, times(1)).createTicket(newTicket);
     }
 
     @Test
@@ -82,13 +88,13 @@ public class TicketControllerTest {
                 existingTicket.getStatus(), existingTicket.getType(), TicketPriority.HIGH, 20, existingTicket.getEstimate(),
                 existingTicket.getCreatedAt(), existingTicket.getProject(), existingTicket.getAssignedTo(), existingTicket.getCreatedBy(),
                 existingTicket.getResolvedAt(),existingTicket.getResolvedBy());
-        when(ticketService.updateTicket(id, updateTicket)).thenReturn(updateTicket);
+        when(ticketService.updateTicket(updateTicket)).thenReturn(updateTicket);
 
-        Ticket result = ticketController.updateTicket(id, updateTicket);
+        Ticket result = ticketController.updateTicket(updateTicket);
 
         assertNotNull(result);
         assertEquals(updateTicket, result);
 
-        verify(ticketService).updateTicket(id, updateTicket);
+        verify(ticketService).updateTicket(updateTicket);
     }
 }

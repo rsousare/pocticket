@@ -73,7 +73,7 @@ public class PeopleServiceTest {
         when(peopleRepository.findById(existingPeopleId)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(EntityNotFoundException.class, ()->{
-            peopleService.updatePeople(existingPeopleId, updetedPeople);
+            peopleService.updatePeople(updetedPeople);
         });
 
         String expectedMessage = "People with id " + existingPeopleId + " not found!";

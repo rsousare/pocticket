@@ -58,7 +58,7 @@ public class ProjectServiceTest {
         when(projectRepository.findById(projectId)).thenReturn(Optional.of(existingProject));
         when(projectRepository.save(existingProject)).thenReturn(existingProject);
 
-        Project result = projectService.updateProject(projectId, updatedProject);
+        Project result = projectService.updateProject(updatedProject);
 
         assertNotNull(result);
         assertEquals(updatedProject.getName(), result.getName());

@@ -71,8 +71,8 @@ public class TicketController {
     }
 
     @PutMapping("/{id}")
-    public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket ticket){
-        return ticketService.updateTicket(id, ticket);
+    public Ticket updateTicket(@RequestBody Ticket ticket){
+        return ticketService.updateTicket(ticket);
     }
 
     @PutMapping("/{id}/priority")

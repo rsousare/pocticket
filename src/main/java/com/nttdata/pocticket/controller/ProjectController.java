@@ -36,8 +36,8 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public Project updateProject(@PathVariable Long id, @RequestBody Project project){
-        return projectService.updateProject(id, project);
+    public Project updateProject(@RequestBody Project project){
+        return projectService.updateProject(project);
     }
 
     @DeleteMapping("/{id}")

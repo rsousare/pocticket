@@ -29,8 +29,8 @@ public class AreaController {
     }
 
     @PutMapping("/{id}")
-    public Area updateArea(@PathVariable Long id, @RequestBody Area area){
-        return areaService.updateArea(id, area);
+    public Area updateArea(@RequestBody Area area){
+        return areaService.updateArea(area);
     }
 
     @DeleteMapping("/{id}")

@@ -45,20 +45,19 @@ public class PeopleService {
 
     /**
      * Updates an existing person.
-     * @param id The ID of the person to be updated.
      * @param updatePeople The person with updated data.
      * @return The updated person.
      * @throws EntityNotFoundException If the person is not found.
      */
-    public People updatePeople(Long id, People updatePeople){
-        Optional<People> existingPeople = peopleRepository.findById(id);
+    public People updatePeople(People updatePeople){
+        Optional<People> existingPeople = peopleRepository.findById(updatePeople.getId());
         if (existingPeople.isPresent()){
             People peopleToUpdate = existingPeople.get();
             peopleToUpdate.setName(updatePeople.getName());
             peopleToUpdate.setEmail(updatePeople.getEmail());
             return peopleRepository.save(peopleToUpdate);
         }else {
-            throw new EntityNotFoundException("People with id " + id + " not found!");
+            throw new EntityNotFoundException("People with id " + updatePeople.getId() + " not found!");
         }
     }
 

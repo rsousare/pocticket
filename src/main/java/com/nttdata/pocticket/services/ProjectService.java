@@ -45,13 +45,12 @@ public class ProjectService {
 
     /**
      * Updates an existing project.
-     * @param projectId The ID of the project to be updated.
      * @param newProject The project with updated data.
      * @return The updated project.
      * @throws EntityNotFoundException If the project is not found.
      */
-    public Project updateProject(Long projectId, Project newProject){
-        Optional<Project> projectOptional = projectRepository.findById(projectId);
+    public Project updateProject(Project newProject){
+        Optional<Project> projectOptional = projectRepository.findById(newProject.getId());
         if (projectOptional.isPresent()){
             Project existingProject = projectOptional.get();
             existingProject.setName(newProject.getName());
@@ -59,7 +58,7 @@ public class ProjectService {
             existingProject.setEndDate(newProject.getEndDate());
             return projectRepository.save(existingProject);
         }else {
-            throw new EntityNotFoundException("Project with id " + projectId + " not found!");
+            throw new EntityNotFoundException("Project with id " + newProject.getId() + " not found!");
         }
     }
 

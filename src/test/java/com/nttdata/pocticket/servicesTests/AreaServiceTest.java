@@ -72,7 +72,7 @@ public class AreaServiceTest {
         when(areaRepository.findById(existingAreaId)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(EntityNotFoundException.class, ()->{
-            areaService.updateArea(existingAreaId,updatedArea);
+            areaService.updateArea(updatedArea);
         });
 
         String expectedMessage = "Area with ID " + existingAreaId + " not found!";

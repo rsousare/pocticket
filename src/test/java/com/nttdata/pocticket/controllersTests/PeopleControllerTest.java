@@ -66,12 +66,12 @@ public class PeopleControllerTest {
     public void updatePeopleTest(){
         Long id = 1L;
         People existingPeople = mock(People.class);
-        when(peopleService.updatePeople(id, existingPeople)).thenReturn(existingPeople);
+        when(peopleService.updatePeople(existingPeople)).thenReturn(existingPeople);
 
-        People updatedPeople = peopleController.updatePeople(id, existingPeople);
+        People updatedPeople = peopleController.updatePeople(existingPeople);
 
         assertEquals(existingPeople, updatedPeople);
-        verify(peopleService).updatePeople(id, existingPeople);
+        verify(peopleService).updatePeople(existingPeople);
     }
 
     @Test

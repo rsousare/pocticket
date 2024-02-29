@@ -76,13 +76,12 @@ public class TicketService {
 
     /**
      * Updates an existing ticket.
-     * @param id The ID of the ticket to update.
      * @param updateTicket The ticket with updated data.
      * @return The updated ticket.
      * @throws EntityNotFoundException If the ticket with the given ID is not found.
      */
-    public Ticket updateTicket(Long id, Ticket updateTicket){
-        Optional<Ticket> existingTicket = ticketRepository.findById(id);
+    public Ticket updateTicket(Ticket updateTicket){
+        Optional<Ticket> existingTicket = ticketRepository.findById(updateTicket.getId());
         if (existingTicket.isPresent()){
             Ticket ticketToUpdate = existingTicket.get();
             ticketToUpdate.setTitle(updateTicket.getTitle());
@@ -94,7 +93,7 @@ public class TicketService {
 
             return ticketRepository.save(ticketToUpdate);
         }else {
-            throw new EntityNotFoundException("Ticket with id " + id + " not found!");
+            throw new EntityNotFoundException("Ticket with id " + updateTicket.getId() + " not found!");
         }
     }
 
