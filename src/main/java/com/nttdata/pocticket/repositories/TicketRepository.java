@@ -21,7 +21,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByResolvedByOrderByResolvedAtDesc(People resolvedBy);
 
     @Query(value = "SELECT " +
-                   "idTicket, " +
+                   "id, " +
                    "title, " +
                    "description, " +
                    "status, " +

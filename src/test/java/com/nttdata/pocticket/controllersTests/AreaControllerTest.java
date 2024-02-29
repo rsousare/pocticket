@@ -40,7 +40,7 @@ public class AreaControllerTest {
     public void getAreaByIdTest(){
         Long id = 1L;
         Area mockArea = new Area();
-        mockArea.setIdArea(id);
+        mockArea.setId(id);
         mockArea.setName("Test Area");
         when(areaService.getAreaById(id)).thenReturn(Optional.of(mockArea));
 

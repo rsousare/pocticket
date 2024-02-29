@@ -25,7 +25,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private long idTicket;
+    private long id;
 
     @NotBlank(message = "The title cannot be empty")
     @Size(max = 50, message = "Max 50 characters")

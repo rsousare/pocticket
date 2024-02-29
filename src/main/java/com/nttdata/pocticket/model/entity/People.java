@@ -19,7 +19,7 @@ public class People {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private long idPeople;
+    private long id;
 
     @Column(length = 50, nullable = false)
     private String name;

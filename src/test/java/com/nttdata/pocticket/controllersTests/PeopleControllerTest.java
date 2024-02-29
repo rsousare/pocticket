@@ -40,7 +40,7 @@ public class PeopleControllerTest {
     public void getPeopleByIdTest(){
         Long id = 1L;
         People mockPeople = new People();
-        mockPeople.setIdPeople(id);
+        mockPeople.setId(id);
         mockPeople.setName("People name");
         when(peopleService.getPeopleById(id)).thenReturn(Optional.of(mockPeople));
 

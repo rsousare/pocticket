@@ -51,7 +51,7 @@ public class TicketControllerTest {
     public void getTicketByIdTest(){
         Long id = 1L;
         Ticket mockTicket = new Ticket();
-        mockTicket.setIdTicket(id);
+        mockTicket.setId(id);
         mockTicket.setTitle("Ticket Test");
         when(ticketService.getTicketById(id)).thenReturn(Optional.of(mockTicket));
 
@@ -78,7 +78,7 @@ public class TicketControllerTest {
         Long id = 1L;
         Ticket existingTicket = mock(Ticket.class);
 
-        Ticket updateTicket = new Ticket(existingTicket.getIdTicket(), existingTicket.getTitle(), "Update Title",
+        Ticket updateTicket = new Ticket(existingTicket.getId(), existingTicket.getTitle(), "Update Title",
                 existingTicket.getStatus(), existingTicket.getType(), TicketPriority.HIGH, 20, existingTicket.getEstimate(),
                 existingTicket.getCreatedAt(), existingTicket.getProject(), existingTicket.getAssignedTo(), existingTicket.getCreatedBy(),
                 existingTicket.getResolvedAt(),existingTicket.getResolvedBy());

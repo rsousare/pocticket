@@ -41,7 +41,7 @@ public class ProjectControllerTest {
     public void getProjectByIdTest(){
         Long id = 1L;
         Project mockProject = new Project();
-        mockProject.setIdProject(id);
+        mockProject.setId(id);
         mockProject.setName("New project");
         when(projectService.getProjectById(id)).thenReturn(Optional.of(mockProject));
 

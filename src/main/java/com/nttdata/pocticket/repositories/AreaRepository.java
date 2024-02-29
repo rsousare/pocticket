@@ -13,6 +13,6 @@ public interface AreaRepository extends JpaRepository<Area, Long> {
 
     @Query("SELECT a FROM Area a JOIN a.projects p JOIN p.tickets t " +
            "GROUP BY a " +
-           "ORDER BY COUNT(t.idTicket) DESC")
+           "ORDER BY COUNT(t.id) DESC")
     List<Area> findAreasWithMostContributors();
 }

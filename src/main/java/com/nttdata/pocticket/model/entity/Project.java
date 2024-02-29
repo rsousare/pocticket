@@ -1,7 +1,6 @@
 package com.nttdata.pocticket.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nttdata.pocticket.model.entity.Area;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -22,7 +21,7 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private long idProject;
+    private long id;
 
     @NotBlank(message = "The name cannot be empty")
     @Size(max = 50, message = "Max 50 characters")

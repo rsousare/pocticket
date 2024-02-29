@@ -61,7 +61,7 @@ public class TicketServiceTest {
     public void updateTicketTest(){
         Long id = 1L;
         Ticket existingTicket = mock(Ticket.class);
-        Ticket updatedTicket = new Ticket(existingTicket.getIdTicket(), existingTicket.getTitle(), "Update Title",
+        Ticket updatedTicket = new Ticket(existingTicket.getId(), existingTicket.getTitle(), "Update Title",
                 existingTicket.getStatus(), existingTicket.getType(), TicketPriority.HIGH, 20, existingTicket.getEstimate(),
                 existingTicket.getCreatedAt(), existingTicket.getProject(), existingTicket.getAssignedTo(), existingTicket.getCreatedBy(),
                 existingTicket.getResolvedAt(),existingTicket.getResolvedBy());

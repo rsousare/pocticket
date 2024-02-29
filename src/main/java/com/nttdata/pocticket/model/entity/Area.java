@@ -22,7 +22,7 @@ public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
-    private long idArea;
+    private long id;
 
     @NotBlank(message = "The name cannot be empty")
     @Size(max = 50, message = "Max 50 characters")

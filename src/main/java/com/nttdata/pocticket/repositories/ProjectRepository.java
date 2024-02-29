@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByName(String name);
 
-    @Query("SELECT p, COUNT(t.idTicket) AS totalTickets " +
+    @Query("SELECT p, COUNT(t.id) AS totalTickets " +
            "FROM Project p JOIN p.tickets t " +
            "GROUP BY p " +
            "ORDER BY totalTickets DESC")
