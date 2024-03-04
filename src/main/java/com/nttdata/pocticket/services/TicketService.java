@@ -62,17 +62,26 @@ public class TicketService {
      * @return The newly created ticket.
      * @throws EntityNotFoundException If the associated project or assigned user is not found.
      */
+//    public Ticket createTicket(Ticket ticket){
+//        Project project = projectRepository.findById(ticket.getProject().getId()).orElse(null);
+//        People assignedTo = peopleRepository.findById(ticket.getAssignedTo().getId()).orElse(null);
+//        if (project != null && assignedTo != null){
+//            ticket.setProject(project);
+//            ticket.setAssignedTo(assignedTo);
+//            return ticketRepository.save(ticket);
+//        }else {
+//            throw new EntityNotFoundException("Ticket " + ticket + " not found!");
+//        }
+//    }
+
     public Ticket createTicket(Ticket ticket){
-        Project project = projectRepository.findById(ticket.getProject().getId()).orElse(null);
-        People assignedTo = peopleRepository.findById(ticket.getAssignedTo().getId()).orElse(null);
-        if (project != null && assignedTo != null){
-            ticket.setProject(project);
-            ticket.setAssignedTo(assignedTo);
-            return ticketRepository.save(ticket);
-        }else {
-            throw new EntityNotFoundException("Ticket " + ticket + " not found!");
+        boolean projectExists = ticketRepository.existsByProjectId(ticket.getProject().getId());
+        if (!projectExists){
+            throw new IllegalArgumentException("The project associated ");
         }
+        return ticketRepository.save(ticket);
     }
+
 
     /**
      * Updates an existing ticket.

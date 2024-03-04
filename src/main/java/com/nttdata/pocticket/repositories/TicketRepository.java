@@ -7,6 +7,7 @@ import com.nttdata.pocticket.model.enums.TicketPriority;
 import com.nttdata.pocticket.model.enums.TicketStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByProject(Project project);
     List<Ticket> findByCreatedByOrderByCreatedAtDesc(People createdBy);
     List<Ticket> findByResolvedByOrderByResolvedAtDesc(People resolvedBy);
+
+    @Query("SELECT COUNT(t) > 0 FROM Ticket t WHERE t.project.id = :projectId")
+    boolean existsByProjectId(@Param("projectId") Long projectId);
 
     @Query(value = "SELECT " +
                    "id, " +
