@@ -1,6 +1,7 @@
 package com.nttdata.pocticket.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -36,10 +37,11 @@ public class Project {
 
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "area_id", nullable = false)
+    @JsonBackReference
     private Area area;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Ticket> tickets;
 }

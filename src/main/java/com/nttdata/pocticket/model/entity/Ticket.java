@@ -1,6 +1,6 @@
 package com.nttdata.pocticket.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nttdata.pocticket.model.enums.TicketPriority;
 import com.nttdata.pocticket.model.enums.TicketStatus;
 import com.nttdata.pocticket.model.enums.TicketType;
@@ -60,8 +60,8 @@ public class Ticket {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "project_id", nullable = false)
+    @JsonBackReference
     private Project project;
 
     @ManyToOne

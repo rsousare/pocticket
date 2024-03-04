@@ -49,16 +49,37 @@ public class AreaService {
      * @return The updated area.
      * @throws EntityNotFoundException If the area is not found.
      */
+//    public Area updateArea(Area newArea){
+//        Optional<Area> areaOptional = areaRepository.findById(newArea.getId());
+//        if (areaOptional.isPresent()){
+//            Area existingArea = areaOptional.get();
+//            existingArea.setName(newArea.getName());
+//            existingArea.setDescription(newArea.getDescription());
+//            return areaRepository.save(existingArea);
+//        }else {
+//            throw new EntityNotFoundException("Area with ID " + newArea.getId() + " not found!");
+//        }
+//    }
+
     public Area updateArea(Area newArea){
-        Optional<Area> areaOptional = areaRepository.findById(newArea.getId());
-        if (areaOptional.isPresent()){
-            Area existingArea = areaOptional.get();
-            existingArea.setName(newArea.getName());
-            existingArea.setDescription(newArea.getDescription());
-            return areaRepository.save(existingArea);
-        }else {
-            throw new EntityNotFoundException("Area with ID " + newArea.getId() + " not found!");
+        if (newArea == null || newArea.getId() == 0){
+            throw new IllegalArgumentException("The provided Area or Id cannot be null or 0.");
         }
+
+        Optional<Area> areaOptional = areaRepository.findById(newArea.getId());
+        if (areaOptional.isEmpty()){
+            throw new EntityNotFoundException("Area with Id " + newArea.getId() + " not found");
+        }
+
+        Area existingArea  = areaOptional.get();
+
+        if (newArea.getName() == null || newArea.getName().isEmpty()){
+            throw new IllegalArgumentException("Area name cannot be null or empty");
+        }
+        existingArea.setName(newArea.getName());
+        existingArea.setDescription(newArea.getDescription());
+
+        return areaRepository.save(existingArea);
     }
 
     /**

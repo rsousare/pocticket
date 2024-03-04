@@ -7,6 +7,7 @@ import com.nttdata.pocticket.model.entity.Ticket;
 import com.nttdata.pocticket.model.enums.TicketPriority;
 import com.nttdata.pocticket.model.enums.TicketStatus;
 import com.nttdata.pocticket.model.enums.TicketType;
+import com.nttdata.pocticket.repositories.ProjectRepository;
 import com.nttdata.pocticket.services.TicketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public TicketController(TicketService ticketService){
         this.ticketService = ticketService;
@@ -95,12 +99,25 @@ public class TicketController {
     @PostMapping
     public Ticket createTicket(@RequestBody Ticket ticket){
         Project project = ticket.getProject();
-        if (project == null){
+
+        if (project == null || project.getId() == 0){
             throw new IllegalArgumentException("The project associated with the ticket cannot be null.");
         }
         logger.info("Received ticket request: {}", ticket);
         return ticketService.createTicket(ticket);
     }
+
+//    @PostMapping
+//    public Ticket createTicket(@RequestParam Long projectId, @RequestBody Ticket ticket){
+//        if (projectId == null){
+//            throw new IllegalArgumentException("The project Id associated with the ticket cannot be null");
+//        }
+//        Project project = projectRepository.findById(projectId).orElseThrow(
+//                ()-> new EntityNotFoundException("Project not found with Id: " + projectId));
+//        ticket.setProject(project);
+//        logger.info("Received ticket request: {}", ticket );
+//        return ticketService.createTicket(ticket);
+//    }
 
 
     /**

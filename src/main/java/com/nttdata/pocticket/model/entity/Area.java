@@ -1,7 +1,7 @@
 package com.nttdata.pocticket.model.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -33,6 +33,6 @@ public class Area {
     private String description;
 
     @OneToMany(mappedBy = "area")
-    @JsonIgnore
+    @JsonManagedReference
     private List<Project> projects;
 }

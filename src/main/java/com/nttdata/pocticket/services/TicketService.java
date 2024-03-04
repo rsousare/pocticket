@@ -75,13 +75,26 @@ public class TicketService {
 //    }
 
     public Ticket createTicket(Ticket ticket){
-        boolean projectExists = ticketRepository.existsByProjectId(ticket.getProject().getId());
-        if (!projectExists){
-            throw new IllegalArgumentException("The project associated ");
+        if (ticket == null){
+            throw new IllegalArgumentException("Ticket object cannot be null");
         }
+        if (ticket.getTitle() == null || ticket.getTitle().isEmpty()){
+            throw new IllegalArgumentException("Ticket Title cannot be null or empty");
+        }
+        if (ticket.getDescription() == null || ticket.getDescription().isEmpty()){
+            throw new IllegalArgumentException("Ticket description cannot be null or empty");
+        }
+        Project project = projectRepository.findById(ticket.getProject().getId()).orElseThrow(
+                ()->new EntityNotFoundException("Project not found whit Id: " + ticket.getProject().getId()));
+
+        People assignedTo = peopleRepository.findById(ticket.getAssignedTo().getId()).orElseThrow(
+                ()-> new EntityNotFoundException("People not found whit Id: " + ticket.getAssignedTo().getId()));
+
+        ticket.setProject(project);
+        ticket.setAssignedTo(assignedTo);
+
         return ticketRepository.save(ticket);
     }
-
 
     /**
      * Updates an existing ticket.
