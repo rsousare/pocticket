@@ -1,11 +1,14 @@
 package com.nttdata.pocticket.controller;
 
+import com.nttdata.pocticket.model.dto.PeopleDTO;
 import com.nttdata.pocticket.model.entity.People;
 import com.nttdata.pocticket.services.PeopleService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/people")
@@ -13,13 +16,19 @@ public class PeopleController {
     @Autowired
     private PeopleService peopleService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     /**
      * Retrieves all people.
      * @return A list of all people.
      */
     @GetMapping
-    public List<People> getAllPeople(){
-        return peopleService.getAllPeople();
+    public List<PeopleDTO> getAllPeople(){
+        List<People> people = peopleService.getAllPeople();
+        return people.stream()
+                .map(person -> modelMapper.map(person, PeopleDTO.class))
+                .collect(Collectors.toList());
     }
 
     /**

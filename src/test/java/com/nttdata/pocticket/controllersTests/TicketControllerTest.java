@@ -2,9 +2,12 @@ package com.nttdata.pocticket.controllersTests;
 
 
 import com.nttdata.pocticket.controller.TicketController;
+import com.nttdata.pocticket.model.dto.TicketDTO;
 import com.nttdata.pocticket.model.entity.Project;
 import com.nttdata.pocticket.model.entity.Ticket;
 import com.nttdata.pocticket.model.enums.TicketPriority;
+import com.nttdata.pocticket.model.enums.TicketStatus;
+import com.nttdata.pocticket.model.enums.TicketType;
 import com.nttdata.pocticket.services.TicketService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +32,9 @@ public class TicketControllerTest {
     @Mock
     private TicketService ticketService;
 
+    @Mock
+    private ModelMapper modelMapper;
+
     @InjectMocks
     private TicketController ticketController;
 
@@ -37,14 +45,27 @@ public class TicketControllerTest {
 
     @Test
     public void getAllTicketsTest(){
+        when(modelMapper.map(any(), eq(TicketDTO.class))).thenAnswer(invocationOnMock -> {
+            Ticket source = invocationOnMock.getArgument(0);
+            return new TicketDTO(source.getId(), source.getTitle(), source.getDescription(),
+                    source.getStatus(), source.getType(), source.getPriority(), source.getProgress(),
+                    source.getEstimate());
+        });
 
-        List<Ticket> tickets = Arrays.asList(new Ticket(), new Ticket());
+        Ticket ticket1 = new Ticket(1L, "Title1", "Original Description", TicketStatus.NEW, TicketType.OTHER,
+                TicketPriority.LOW, 0, 10, LocalDateTime.now(), null, null, null, null, null);
+        Ticket ticket2 = new Ticket(2L, "Title2", "Original Description", TicketStatus.NEW, TicketType.OTHER,
+                TicketPriority.LOW, 0, 10, LocalDateTime.now(), null, null, null, null, null);
+
+        List<Ticket> tickets = Arrays.asList(ticket1, ticket2);
         when(ticketService.getAllTickets()).thenReturn(tickets);
 
-        List<Ticket> result = ticketController.getAllTickets();
-
-        assertEquals(tickets, result);
+        List<TicketDTO> result = ticketController.getAllTickets();
         verify(ticketService).getAllTickets();
+
+        assertEquals(2,result.size());
+        assertEquals("Title1", result.get(0).getTitle());
+
     }
 
     @Test

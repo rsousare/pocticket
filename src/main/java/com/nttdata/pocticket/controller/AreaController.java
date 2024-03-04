@@ -1,11 +1,14 @@
 package com.nttdata.pocticket.controller;
 
+import com.nttdata.pocticket.model.dto.AreaDTO;
 import com.nttdata.pocticket.model.entity.Area;
 import com.nttdata.pocticket.services.AreaService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/areas")
@@ -13,13 +16,19 @@ public class AreaController {
     @Autowired
     private AreaService areaService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     /**
      * Retrieves all areas.
      * @return A list of all areas.
      */
     @GetMapping
-    public List<Area> getAllAreas(){
-        return areaService.getAllAreas();
+    public List<AreaDTO> getAllAreas(){
+        List<Area> areas = areaService.getAllAreas();
+        return areas.stream()
+                .map(area -> modelMapper.map(area, AreaDTO.class))
+                .collect(Collectors.toList());
     }
 
     /**

@@ -2,6 +2,7 @@ package com.nttdata.pocticket.controller;
 
 
 import com.nttdata.pocticket.model.dto.ProjectTicketProgress;
+import com.nttdata.pocticket.model.dto.TicketDTO;
 import com.nttdata.pocticket.model.entity.Project;
 import com.nttdata.pocticket.model.entity.Ticket;
 import com.nttdata.pocticket.model.enums.TicketPriority;
@@ -9,6 +10,7 @@ import com.nttdata.pocticket.model.enums.TicketStatus;
 import com.nttdata.pocticket.model.enums.TicketType;
 import com.nttdata.pocticket.repositories.ProjectRepository;
 import com.nttdata.pocticket.services.TicketService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tickets")
@@ -30,6 +33,9 @@ public class TicketController {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     public TicketController(TicketService ticketService){
         this.ticketService = ticketService;
     }
@@ -39,8 +45,11 @@ public class TicketController {
      * @return List of all tickets.
      */
     @GetMapping
-    public List<Ticket> getAllTickets(){
-        return ticketService.getAllTickets();
+    public List<TicketDTO> getAllTickets(){
+        List<Ticket> tickets = ticketService.getAllTickets();
+        return tickets.stream()
+                .map(ticket -> modelMapper.map(ticket, TicketDTO.class))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -106,19 +115,6 @@ public class TicketController {
         logger.info("Received ticket request: {}", ticket);
         return ticketService.createTicket(ticket);
     }
-
-//    @PostMapping
-//    public Ticket createTicket(@RequestParam Long projectId, @RequestBody Ticket ticket){
-//        if (projectId == null){
-//            throw new IllegalArgumentException("The project Id associated with the ticket cannot be null");
-//        }
-//        Project project = projectRepository.findById(projectId).orElseThrow(
-//                ()-> new EntityNotFoundException("Project not found with Id: " + projectId));
-//        ticket.setProject(project);
-//        logger.info("Received ticket request: {}", ticket );
-//        return ticketService.createTicket(ticket);
-//    }
-
 
     /**
      * Updates an existing ticket.

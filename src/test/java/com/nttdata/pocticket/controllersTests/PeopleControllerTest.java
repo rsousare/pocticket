@@ -1,6 +1,7 @@
 package com.nttdata.pocticket.controllersTests;
 
 import com.nttdata.pocticket.controller.PeopleController;
+import com.nttdata.pocticket.model.dto.PeopleDTO;
 import com.nttdata.pocticket.model.entity.People;
 import com.nttdata.pocticket.services.PeopleService;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,18 +24,32 @@ public class PeopleControllerTest {
     @Mock
     private PeopleService peopleService;
 
+    @Mock
+    private ModelMapper modelMapper;
+
     @InjectMocks
     private PeopleController peopleController;
 
     @Test
     public void getAllPeopleTest(){
-        List<People> mockPeople = Arrays.asList(new People(), new People());
+        when(modelMapper.map(any(), eq(PeopleDTO.class))).thenAnswer(invocationOnMock -> {
+            People source = invocationOnMock.getArgument(0);
+            return new PeopleDTO(source.getId(), source.getName(), source.getEmail());
+        });
+
+        People person1 = new People(1L, "Ricardo", "aa@sapo.pt", new ArrayList<>());
+        People person2 = new People(2L, "Maria", "mm@sapo.pt", new ArrayList<>());
+        List<People> mockPeople = Arrays.asList(person1, person2);
         when(peopleService.getAllPeople()).thenReturn(mockPeople);
 
-        List<People> allPeople = peopleController.getAllPeople();
+        List<PeopleDTO> allPeople = peopleController.getAllPeople();
 
-        assertEquals(mockPeople, allPeople);
         verify(peopleService).getAllPeople();
+
+        assertEquals(2, allPeople.size());
+        assertEquals("Ricardo", allPeople.get(0).getName());
+        assertEquals("mm@sapo.pt", allPeople.get(1).getEmail());
+
     }
 
     @Test
