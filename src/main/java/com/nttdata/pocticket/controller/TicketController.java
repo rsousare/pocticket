@@ -8,7 +8,6 @@ import com.nttdata.pocticket.model.entity.Ticket;
 import com.nttdata.pocticket.model.enums.TicketPriority;
 import com.nttdata.pocticket.model.enums.TicketStatus;
 import com.nttdata.pocticket.model.enums.TicketType;
-import com.nttdata.pocticket.repositories.ProjectRepository;
 import com.nttdata.pocticket.services.TicketService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -29,9 +28,6 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
-
-    @Autowired
-    private ProjectRepository projectRepository;
 
     @Autowired
     private ModelMapper modelMapper;
