@@ -4,8 +4,10 @@ import com.nttdata.pocticket.model.entity.Area;
 import com.nttdata.pocticket.repositories.AreaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,18 @@ public class AreaService {
      * @return List of all areas.
      */
     public List<Area> getAllAreas(){
-        return areaRepository.findAll();
+        if (areaRepository == null){
+            throw new IllegalArgumentException("Area cannot be null");
+        }
+        try {
+            List<Area> areas = areaRepository.findAll();
+            if (areas.isEmpty()) {
+                throw new IllegalArgumentException("Areas cannot be empty");
+            }
+            return areas;
+        }catch (DataAccessException e){
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -31,6 +44,9 @@ public class AreaService {
      * @return An Optional containing the area if found.
      */
     public Optional<Area> getAreaById(Long areaId){
+        if (areaId == null){
+            throw new IllegalArgumentException("Id cannot be null");
+        }
         return areaRepository.findById(areaId);
     }
 
@@ -40,6 +56,12 @@ public class AreaService {
      * @return The newly created area.
      */
     public Area createArea(Area area){
+        if (area == null){
+            throw new IllegalArgumentException("Area cannot be null");
+        }
+        if (area.getName() == null || area.getName().isEmpty()){
+            throw new IllegalArgumentException("Area name is required");
+        }
         return areaRepository.save(area);
     }
 
@@ -49,17 +71,6 @@ public class AreaService {
      * @return The updated area.
      * @throws EntityNotFoundException If the area is not found.
      */
-//    public Area updateArea(Area newArea){
-//        Optional<Area> areaOptional = areaRepository.findById(newArea.getId());
-//        if (areaOptional.isPresent()){
-//            Area existingArea = areaOptional.get();
-//            existingArea.setName(newArea.getName());
-//            existingArea.setDescription(newArea.getDescription());
-//            return areaRepository.save(existingArea);
-//        }else {
-//            throw new EntityNotFoundException("Area with ID " + newArea.getId() + " not found!");
-//        }
-//    }
 
     public Area updateArea(Area newArea){
         if (newArea == null || newArea.getId() == 0){
@@ -87,6 +98,9 @@ public class AreaService {
      * @param areaId The ID of the area to be deleted.
      */
     public void deleteArea(Long areaId){
+        if (areaId == null || areaId <= 0){
+            throw new IllegalArgumentException("Invalid id Area");
+        }
         areaRepository.deleteById(areaId);
     }
 
@@ -95,6 +109,17 @@ public class AreaService {
      * @return List of areas with the most contributors.
      */
     public List<Area> getAreasWithMostContributors(){
-        return areaRepository.findAreasWithMostContributors();
+        try {
+            List<Area> areas = areaRepository.findAreasWithMostContributors();
+            if (areas == null) {
+                throw new IllegalArgumentException("No areas found with contributors");
+            }
+            if (areas.isEmpty()) {
+                return Collections.emptyList();
+            }
+            return areas;
+        }catch (DataAccessException e){
+            throw new IllegalArgumentException("Error while retrieving areas with most contributors", e);
+        }
     }
 }

@@ -41,9 +41,6 @@ public class TicketService {
      * Retrieves all tickets.
      * @return List of all tickets.
      */
-//    public List<Ticket> getAllTickets(){
-//        return ticketRepository.findAll();
-//    }
     public List<Ticket> getAllTickets(){
         if (ticketRepository == null){
             throw new IllegalArgumentException("TicketRepository cannot be null!");
@@ -77,17 +74,6 @@ public class TicketService {
      * @return The newly created ticket.
      * @throws EntityNotFoundException If the associated project or assigned user is not found.
      */
-//    public Ticket createTicket(Ticket ticket){
-//        Project project = projectRepository.findById(ticket.getProject().getId()).orElse(null);
-//        People assignedTo = peopleRepository.findById(ticket.getAssignedTo().getId()).orElse(null);
-//        if (project != null && assignedTo != null){
-//            ticket.setProject(project);
-//            ticket.setAssignedTo(assignedTo);
-//            return ticketRepository.save(ticket);
-//        }else {
-//            throw new EntityNotFoundException("Ticket " + ticket + " not found!");
-//        }
-//    }
 
     public Ticket createTicket(Ticket ticket){
         if (ticket == null){
@@ -207,7 +193,7 @@ public class TicketService {
     }
 
     /**
-     * Updates the type of a ticket.
+     * Updates the type of ticket.
      * @param id The ID of the ticket to update.
      * @param type The new type for the ticket.
      * @return true if the type is updated successfully, false otherwise.
@@ -328,6 +314,7 @@ public class TicketService {
      */
     public List<Ticket> searchCompletedTickets(){
         List<Ticket> completedTickets = ticketRepository.findByStatus(TicketStatus.DONE);
+
         if (completedTickets == null){
             throw new RuntimeException("Failed to retrieve completed tickets");
         }

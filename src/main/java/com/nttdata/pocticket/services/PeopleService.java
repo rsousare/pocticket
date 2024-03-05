@@ -4,8 +4,10 @@ import com.nttdata.pocticket.model.entity.People;
 import com.nttdata.pocticket.repositories.PeopleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,18 @@ public class PeopleService {
      * @return List of all people.
      */
     public List<People> getAllPeople(){
-        return peopleRepository.findAll();
+        if (peopleRepository == null){
+            throw new IllegalArgumentException("PeopleRepository cannot be null");
+        }
+        try {
+            List<People> people = peopleRepository.findAll();
+            if (people.isEmpty()) {
+                throw new IllegalArgumentException("People cannot be empty");
+            }
+            return people;
+        }catch (DataAccessException e){
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -31,6 +44,9 @@ public class PeopleService {
      * @return An Optional containing the person if found.
      */
     public Optional<People> getPeopleById(Long id){
+        if (id == null){
+            throw new IllegalArgumentException("Id cannot be null");
+        }
         return peopleRepository.findById(id);
     }
 
@@ -40,6 +56,12 @@ public class PeopleService {
      * @return The newly created person.
      */
     public People createPeople(People people){
+        if (people == null){
+            throw new IllegalArgumentException("People cannot be null");
+        }
+        if (people.getName() == null || people.getName().isEmpty()){
+            throw new IllegalArgumentException("People name is required");
+        }
         return peopleRepository.save(people);
     }
 
@@ -50,15 +72,19 @@ public class PeopleService {
      * @throws EntityNotFoundException If the person is not found.
      */
     public People updatePeople(People updatePeople){
+        if (updatePeople == null){
+            throw new IllegalArgumentException("Update cannot be null");
+        }
         Optional<People> existingPeople = peopleRepository.findById(updatePeople.getId());
-        if (existingPeople.isPresent()){
+
+        if (existingPeople.isEmpty()) {
+            throw new EntityNotFoundException("People with id " + updatePeople.getId() + " not found!");
+        }
             People peopleToUpdate = existingPeople.get();
             peopleToUpdate.setName(updatePeople.getName());
             peopleToUpdate.setEmail(updatePeople.getEmail());
+
             return peopleRepository.save(peopleToUpdate);
-        }else {
-            throw new EntityNotFoundException("People with id " + updatePeople.getId() + " not found!");
-        }
     }
 
     /**
@@ -66,6 +92,9 @@ public class PeopleService {
      * @param id The ID of the person to be deleted.
      */
     public void deletePeople(Long id){
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("Invalid id people");
+        }
         peopleRepository.deleteById(id);
     }
 }
