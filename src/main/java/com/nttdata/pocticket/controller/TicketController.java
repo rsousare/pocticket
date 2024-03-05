@@ -175,8 +175,8 @@ public class TicketController {
      */
     @PutMapping("/{id}/assign")
     public ResponseEntity<String> assignTicket(@PathVariable Long id, @RequestBody Map<String, Long> requestBody){
-        Long idPeople = requestBody.get("id");
-        Long idProject = requestBody.get("id");
+        Long idPeople = requestBody.get("idPeople");
+        Long idProject = requestBody.get("idProject");
         if (idPeople != null) {
             if (idProject != null && ticketService.assignTicket(id, idPeople, idProject)) {
                 return ResponseEntity.ok("Ticket assigned successfully");

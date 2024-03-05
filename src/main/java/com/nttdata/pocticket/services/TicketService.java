@@ -15,13 +15,11 @@ import com.nttdata.pocticket.repositories.TicketRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Service to handle operations related to tickets.
@@ -43,8 +41,22 @@ public class TicketService {
      * Retrieves all tickets.
      * @return List of all tickets.
      */
+//    public List<Ticket> getAllTickets(){
+//        return ticketRepository.findAll();
+//    }
     public List<Ticket> getAllTickets(){
-        return ticketRepository.findAll();
+        if (ticketRepository == null){
+            throw new IllegalArgumentException("TicketRepository cannot be null!");
+        }
+        try {
+            List<Ticket> tickets = ticketRepository.findAll();
+            if (tickets.isEmpty()){
+                throw new IllegalArgumentException("Ticket cannot be empty!");
+            }
+            return tickets;
+        }catch (DataAccessException ex){
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -53,6 +65,9 @@ public class TicketService {
      * @return An Optional containing the ticket if found.
      */
     public Optional<Ticket> getTicketById(Long id){
+        if (id == null){
+            throw new IllegalArgumentException("Id cannot be null");
+        }
         return ticketRepository.findById(id);
     }
 
@@ -103,8 +118,13 @@ public class TicketService {
      * @throws EntityNotFoundException If the ticket with the given ID is not found.
      */
     public Ticket updateTicket(Ticket updateTicket){
+        if (updateTicket == null){
+            throw new IllegalArgumentException("Update ticket cannot be null");
+        }
         Optional<Ticket> existingTicket = ticketRepository.findById(updateTicket.getId());
-        if (existingTicket.isPresent()){
+        if (existingTicket.isEmpty()) {
+            throw new EntityNotFoundException("Ticket with id: " + updateTicket.getId() + " not found");
+        }
             Ticket ticketToUpdate = existingTicket.get();
             ticketToUpdate.setTitle(updateTicket.getTitle());
             ticketToUpdate.setDescription(updateTicket.getDescription());
@@ -114,9 +134,6 @@ public class TicketService {
             ticketToUpdate.setEstimate(updateTicket.getEstimate());
 
             return ticketRepository.save(ticketToUpdate);
-        }else {
-            throw new EntityNotFoundException("Ticket with id " + updateTicket.getId() + " not found!");
-        }
     }
 
     /**
@@ -124,6 +141,9 @@ public class TicketService {
      * @param id The ID of the ticket to delete.
      */
     public void deleteTicket(Long id){
+        if (id == null || id == 0){
+            throw new IllegalArgumentException("Id cannot be null!");
+        }
         ticketRepository.deleteById(id);
     }
 
@@ -134,6 +154,12 @@ public class TicketService {
      * @return true if the priority is updated successfully, false otherwise.
      */
     public boolean updatePriority(Long id, TicketPriority priority){
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("Invalid ticket id");
+        }
+        if (priority == null){
+            throw new IllegalArgumentException("Ticket priority cannot be null");
+        }
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()){
             Ticket ticket = optionalTicket.get();
@@ -152,9 +178,16 @@ public class TicketService {
      * @return true if the status is updated successfully, false otherwise.
      */
     public boolean updateStatus(Long id, TicketStatus status){
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("Invalid ticket id");
+        }
+        if (status == null){
+            throw new IllegalArgumentException("Status cannot be null");
+        }
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()){
             Ticket ticket = optionalTicket.get();
+
             if(status == TicketStatus.DONE){
                 ticket.setStatus(status);
                 ticket.setResolvedAt(LocalDateTime.now());
@@ -180,6 +213,12 @@ public class TicketService {
      * @return true if the type is updated successfully, false otherwise.
      */
     public boolean updateType(Long id, TicketType type){
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("Invalid ticket id");
+        }
+        if (type == null){
+            throw new IllegalArgumentException("Ticket type cannot be null");
+        }
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         if (optionalTicket.isPresent()){
             Ticket ticket = optionalTicket.get();
@@ -199,9 +238,13 @@ public class TicketService {
      * @return true if the ticket is assigned successfully, false otherwise.
      */
     public boolean assignTicket(Long id, Long userId, Long projectId){
+
+        try {
+
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
         Optional<People> optionalPeople = peopleRepository.findById(userId);
         Optional<Project> optionalProject = projectRepository.findById(projectId);
+
         if (optionalTicket.isPresent() && optionalPeople.isPresent() && optionalProject.isPresent()){
             Ticket ticket = optionalTicket.get();
             People user = optionalPeople.get();
@@ -214,6 +257,10 @@ public class TicketService {
 
             return true;
         }else {
+            throw new EntityNotFoundException("Ticket, user or project not found!");
+        }
+        }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -225,7 +272,14 @@ public class TicketService {
      * @return true if the progress is updated successfully, false otherwise.
      */
     public boolean updateProgress(Long id, int progress){
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("Invalid ticket id");
+        }
+        if (progress < 0){
+            throw new IllegalArgumentException("Progress must be a positive number");
+        }
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+
         if (optionalTicket.isPresent()){
             Ticket ticket = optionalTicket.get();
             ticket.setProgress(progress);
@@ -242,7 +296,14 @@ public class TicketService {
      * @return List of tickets with the specified priority.
      */
     public List<Ticket> searchByPriority(TicketPriority priority){
-        return ticketRepository.findByPriority(priority);
+        if (priority == null){
+            throw new IllegalArgumentException("Priority cannot be null");
+        }
+        List<Ticket> tickets = ticketRepository.findByPriority(priority);
+        if (tickets == null){
+            throw new RuntimeException("Failed to retrieve tickets by priority " + priority);
+        }
+        return tickets;
     }
 
     /**
@@ -251,7 +312,14 @@ public class TicketService {
      * @return List of tickets with the specified status.
      */
     public List<Ticket> searchByStatus(TicketStatus status){
-        return ticketRepository.findByStatus(status);
+        if (status == null){
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+        List<Ticket> tickets = ticketRepository.findByStatus(status);
+        if (tickets == null){
+            throw new RuntimeException("Failed to retrieve tickets by status " + status);
+        }
+        return tickets;
     }
 
     /**
@@ -259,7 +327,14 @@ public class TicketService {
      * @return List of completed tickets.
      */
     public List<Ticket> searchCompletedTickets(){
-        return ticketRepository.findByStatus(TicketStatus.DONE);
+        List<Ticket> completedTickets = ticketRepository.findByStatus(TicketStatus.DONE);
+        if (completedTickets == null){
+            throw new RuntimeException("Failed to retrieve completed tickets");
+        }
+        if (completedTickets.isEmpty()){
+            throw new EntityNotFoundException("Tickets not found");
+        }
+        return completedTickets;
     }
 
     /**
@@ -267,11 +342,21 @@ public class TicketService {
      * @return List of project tickets with progress information.
      */
     public List<ProjectTicketProgress> getTopProjectTicketsByProgress(){
-        List<Project> projects = projectRepository.findAll();
+
         List<ProjectTicketProgress> topTicketsWithProgress = new ArrayList<>();
+
+        List<Project> projects = projectRepository.findAll();
+        if (projects.isEmpty()){
+            return topTicketsWithProgress;
+        }
 
         for (Project project : projects){
             List<Ticket> projectTickets = ticketRepository.findByProject(project);
+
+            if (projectTickets == null || projectTickets.isEmpty()){
+                continue;
+            }
+
             double totalEstimate = projectTickets.stream().mapToDouble(Ticket::getEstimate).sum();
             double totalProgress = projectTickets.stream().mapToDouble(Ticket::getProgress).sum();
 
@@ -291,7 +376,14 @@ public class TicketService {
      * @return List of top tickets created by the user.
      */
     public List<Ticket> getTopTicketsByCreation(People createdBy){
-        return ticketRepository.findByCreatedByOrderByCreatedAtDesc(createdBy);
+        if (createdBy == null){
+            throw new IllegalArgumentException("Parameter created cannot be null");
+        }
+        List<Ticket> tickets = ticketRepository.findByCreatedByOrderByCreatedAtDesc(createdBy);
+        if (tickets.isEmpty()){
+            throw new EntityNotFoundException("No tickets found for user: " + createdBy.getName());
+        }
+        return tickets;
     }
 
     /**
@@ -300,6 +392,15 @@ public class TicketService {
      * @return List of top tickets resolved by the user.
      */
     public List<Ticket> getTopTicketsByResolution(People resolvedBy){
-        return ticketRepository.findByResolvedByOrderByResolvedAtDesc(resolvedBy);
+        if (resolvedBy == null){
+            throw new IllegalArgumentException("Parameter resolved cannot be null");
+        }
+
+        List<Ticket> tickets = ticketRepository.findByResolvedByOrderByResolvedAtDesc(resolvedBy);
+
+        if (tickets.isEmpty()){
+            throw new EntityNotFoundException("No tickets found for user " + resolvedBy.getName());
+        }
+        return tickets;
     }
 }
