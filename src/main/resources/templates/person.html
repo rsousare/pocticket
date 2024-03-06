@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People</title>
+    <style>
+        body {
+            text-align: center;
+            position: relative;
+        }
+        .back-button {
+            position: absolute;
+            bottom: -450px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: blue;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-container input {
+            margin-bottom: 10px;
+        }
+        .button {
+            margin-top: 20px;
+        }
+        .create-button {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<h1>People</h1>
+
+<div class="form-container">
+    <form action="/people/create" method="post" autocomplete="off">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br><br>
+        <button type="submit" class="create-button" >Create Person</button>
+    </form>
+</div>
+
+
+<button class="button" onclick="location.href='/people'">All People</button>
+
+
+<button class="back-button" onclick="location.href='/menu'">Back to Menu</button>
+</body>
+</html>

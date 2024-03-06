@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Project</title>
+    <style>
+        body {
+            text-align: center;
+            position: relative;
+        }
+        .back-button {
+            position: absolute;
+            bottom: -450px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: blue;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-container input {
+            margin-bottom: 10px;
+        }
+        .button {
+            margin-top: 20px;
+        }
+        .create-button {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Project by ID</h1>
+
+    <div class="form-container">
+        <form action="/projects/{id}" method="get" th:action="@{'/projects/' + ${projectId}}">
+            <label for="projectId">Project ID:</label><br>
+            <input type="text" id="projectId" name="id"><br><br>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+
+<button class="button" onclick="location.href='/projects'">All Projects</button>
+
+
+<button class="back-button" onclick="location.href='/menu'">Back to Menu</button>
+</body>
+</html>

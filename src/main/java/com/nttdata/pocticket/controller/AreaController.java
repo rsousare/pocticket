@@ -51,6 +51,15 @@ public class AreaController {
         return areaService.createArea(area);
     }
 
+    @PostMapping("/create")
+    public String createAreaHtml(@RequestParam ("name") String name, @RequestParam ("description") String description){
+        Area area = new Area();
+        area.setName(name);
+        area.setDescription(description);
+        areaService.createArea(area);
+        return "Area created successfully";
+    }
+
     /**
      * Updates an existing area.
      * @param area The updated area data.

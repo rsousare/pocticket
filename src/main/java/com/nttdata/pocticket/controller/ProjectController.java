@@ -6,6 +6,7 @@ import com.nttdata.pocticket.model.entity.rec.ProjectDetails;
 import com.nttdata.pocticket.services.ProjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,15 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Project getProjectById(@PathVariable Long id){
         return projectService.getProjectById(id).orElse(null);
+    }
+
+    @GetMapping("/projects/{id}")
+    public String getProjectByIdHtml(@PathVariable Long id, Model model){
+        Project project = projectService.getProjectById(id).orElse(null);
+        if (project != null){
+            model.addAttribute("project", project);
+        }
+            return "project-details";
     }
 
     /**

@@ -51,6 +51,15 @@ public class PeopleController {
         return peopleService.createPeople(people);
     }
 
+    @PostMapping("/create")
+    public String createPeopleHtml(@RequestParam ("name") String name, @RequestParam ("email") String email){
+        People people = new People();
+        people.setName(name);
+        people.setEmail(email);
+        peopleService.createPeople(people);
+        return "Person created successfully";
+    }
+
     /**
      * Updates an existing person.
      * @param people The updated person data.

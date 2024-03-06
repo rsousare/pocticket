@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ThymeleafController {
+
     @GetMapping("/home")
     public String home(Model model){
         model.addAttribute("message", "Hello, User!");
@@ -17,4 +18,14 @@ public class ThymeleafController {
     public String getMenuPage(){
         return "menu";
     }
+
+    @GetMapping("/area")
+    public String getAreaPage(){ return "area";}
+
+    @GetMapping("/person")
+    public String getPeoplePage(){ return "person"; }
+
+    @GetMapping("/project")
+    public String getProjectPage(){ return "project"; }
+
 }

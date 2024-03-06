@@ -1,14 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
+    <style>
+        body {
+        text-align: center;
+        position: relative;
+        }
+        h1 {
+            margin-top: 200px;
+            font-size: 40px;
+        }
+        .button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: green;
+        }
+        .back-button {
+            position: absolute;
+            bottom: -300px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: blue;
+        }
+
+    </style>
 </head>
 <body>
-<h1>Choose an option</h1>
-<button onclick="location.href='/areas'">Area</button>
-<button onclick="location.href='/people'">People</button>
-<button onclick="location.href='/projects'">Project</button>
-<button onclick="location.href='/tickets'">Ticket</button>
+    <h1>Choose an option</h1>
+
+    <button class="button" onclick="location.href='/area'">Area</button>
+    <button class="button" onclick="location.href='/person'">People</button>
+    <button class="button" onclick="location.href='/project'">Project</button>
+    <button class="button" onclick="location.href='/tickets'">Ticket</button>
+
+    <button class="back-button" onclick="location.href='/home'">Back to home</button>
 </body>
 </html>
