@@ -7,6 +7,7 @@
         body {
             text-align: center;
             position: relative;
+            background-color: NavajoWhite;
         }
         .back-button {
             position: absolute;
@@ -24,10 +25,14 @@
         }
         .button {
             margin-top: 20px;
+            font-size: 50px;
+            background-color: DarkOrange;
         }
         .create-button {
-            background-color: green;
+            background-color: LightSeaGreen;
+            font-size: 25px;
         }
+
     </style>
 </head>
 <body>
@@ -37,7 +42,7 @@
         <form action="/projects/{id}" method="get">
             <label for="projectId">Project ID:</label><br>
             <input type="text" id="projectId" name="id"><br><br>
-            <button type="submit">Search</button>
+            <button type="submit" class="create-button" >Search</button>
         </form>
     </div>
 

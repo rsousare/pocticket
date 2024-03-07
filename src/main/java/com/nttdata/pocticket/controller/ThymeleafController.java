@@ -10,7 +10,7 @@ public class ThymeleafController {
 
     @GetMapping("/home")
     public String home(Model model){
-        model.addAttribute("message", "Hello, User!");
+        model.addAttribute("message", "Hello, Welcome!");
         return "home";
     }
 

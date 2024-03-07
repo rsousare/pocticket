@@ -12,15 +12,16 @@
             height: 100vh;
             margin: 0;
             text-align: center;
+            background-color: NavajoWhite;
         }
         .button-container {
             margin-top: 20px;
         }
         .enter-button {
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 100px;
             border: 2px solid #000;
-            background-color: red;
+            background-color: FireBrick;
             cursor: pointer;
 
     </style>
@@ -29,6 +30,7 @@
 <div class="message-container">
     <h1 th:text="${message}">Default Message</h1>
 </div>
+
 <div class="button-container">
     <button class="enter-button" onclick="location.href=' /menu'">Enter</button>
 </div>

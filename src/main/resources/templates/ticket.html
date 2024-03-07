@@ -7,49 +7,50 @@
         body {
             text-align: center;
             position: relative;
+            background-color: NavajoWhite;
+        }
+        h1 {
+            margin-top: 200px;
+            font-size: 40px;
         }
         .back-button {
             position: absolute;
-            bottom: -450px;
+            bottom: -370px;
             right: 20px;
             padding: 10px 20px;
             font-size: 16px;
             background-color: blue;
         }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .ticket-button {
-            position: relative;
-            display: inline-block;
             background-image: url('/images/ticketImage.jpg');
             background-size: cover;
             width: 200px;
-            height: 100px;
-            text-align: center;
-            line-height: 50px;
-            color: white;
-            font-size: 16px;
+            height: 200px;
             cursor: pointer;
         }
 
-        .form-container {
-            margin-top: 20px;
-        }
-        .form-container input {
-            margin-bottom: 10px;
-        }
         .button {
-            position: relative;
-            margin-top: 20px;
-            z-index: 1;
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 50px;
+            background-color: Goldenrod;
+
         }
 
 
     </style>
 </head>
 <body>
+<div class="button-container">
 <label class="ticket-button" onclick="location.href='/tickets'"></label>
 
 <button class="button" onclick="location.href='/tickets'">All Tickets</button>
-
+</div>
 
 <button class="back-button" onclick="location.href='/menu'">Back to Menu</button>
 </body>
