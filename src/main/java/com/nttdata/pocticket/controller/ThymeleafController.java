@@ -28,4 +28,7 @@ public class ThymeleafController {
     @GetMapping("/project")
     public String getProjectPage(){ return "project"; }
 
+    @GetMapping("/ticket")
+    public String getTicketPage(){ return "ticket"; }
+
 }

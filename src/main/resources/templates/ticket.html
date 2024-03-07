@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Project</title>
+    <title>Ticket</title>
     <style>
         body {
             text-align: center;
@@ -16,6 +16,20 @@
             font-size: 16px;
             background-color: blue;
         }
+        .ticket-button {
+            position: relative;
+            display: inline-block;
+            background-image: url('/images/ticketImage.jpg');
+            background-size: cover;
+            width: 200px;
+            height: 100px;
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
         .form-container {
             margin-top: 20px;
         }
@@ -23,26 +37,18 @@
             margin-bottom: 10px;
         }
         .button {
+            position: relative;
             margin-top: 20px;
+            z-index: 1;
         }
-        .create-button {
-            background-color: green;
-        }
+
+
     </style>
 </head>
 <body>
-    <h1>Search Project by ID</h1>
+<label class="ticket-button" onclick="location.href='/tickets'"></label>
 
-    <div class="form-container">
-        <form action="/projects/{id}" method="get">
-            <label for="projectId">Project ID:</label><br>
-            <input type="text" id="projectId" name="id"><br><br>
-            <button type="submit">Search</button>
-        </form>
-    </div>
-
-
-<button class="button" onclick="location.href='/projects'">All Projects</button>
+<button class="button" onclick="location.href='/tickets'">All Tickets</button>
 
 
 <button class="back-button" onclick="location.href='/menu'">Back to Menu</button>
