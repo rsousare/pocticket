@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +49,12 @@ public class PeopleService {
             throw new IllegalArgumentException("Id cannot be null");
         }
         return peopleRepository.findById(id);
+    }
+    public List<People> getPeopleByName(String name){
+        if (StringUtils.isEmpty(name)){
+            throw new IllegalArgumentException("The name cannot be empty");
+        }
+        return peopleRepository.findByName(name);
     }
 
     /**

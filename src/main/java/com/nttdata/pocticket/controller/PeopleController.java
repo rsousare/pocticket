@@ -5,6 +5,7 @@ import com.nttdata.pocticket.model.entity.People;
 import com.nttdata.pocticket.services.PeopleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,12 @@ public class PeopleController {
     @GetMapping("/{id}")
     public People getPeopleById(@PathVariable Long id){
         return peopleService.getPeopleById(id).orElse(null);
+    }
+
+    @GetMapping("/byName/{name}")
+    public ResponseEntity<List<People>> getPeopleByName(@PathVariable String name){
+        List<People> people = peopleService.getPeopleByName(name);
+        return ResponseEntity.ok().body(people);
     }
 
     /**
