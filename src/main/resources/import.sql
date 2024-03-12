@@ -2,9 +2,10 @@ insert into area(name, description) values ('IT', 'Informatica');
 insert into area(name, description) values ('IT', 'Network');
 insert into area(name, description) values ('IT', 'Java');
 
-insert into people(name, email) values ('Ricardo', 'aa@gmail.com');
-insert into people(name, email) values ('Joao', 'jj@gmail.com');
-insert into people(name, email) values ('Rafael', 'rr@gmail.com');
+insert into people(name, email, username, password) values ('Ricardo', 'aa@gmail.com', 'ric', '123');
+insert into people(name, email, username, password) values ('Joao', 'jj@gmail.com', 'js', '456');
+insert into people(name, email, username, password) values ('Rafael', 'rr@gmail.com', 'rf', '890');
+insert into people(name, email, username, password) values ('José', 'js@gmail.com', 'jose', '321');
 
 insert into project(name, start_Date, end_Date, area_Id) values ('POC', '19/02/2024', '28/02/2024', 1);
 insert into project(name, start_Date, end_Date, area_Id) values ('Spring', '19/02/2024', '28/02/2024', 2);

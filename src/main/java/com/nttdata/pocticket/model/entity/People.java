@@ -27,6 +27,12 @@ public class People {
     @Column(length = 50, nullable = false)
     private String email;
 
+    @Column(length = 50, nullable = false)
+    private String username;
+
+    @Column(length = 20, nullable = false, unique = true)
+    private String password;
+
     @OneToMany(mappedBy = "assignedTo")
     @JsonIgnore
     private List<Ticket> tickets;

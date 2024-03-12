@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            text-align: center;
+            position: relative;
+            background-color: NavajoWhite;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-container input {
+            margin-bottom: 10px;
+        }
+        .create-button {
+            background-color: LightSeaGreen;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+<h2>Login</h2>
+    <div class="form-container">
+    <form action="/login" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit" class="create-button" >Login</button>
+</form>
+    </div>
+</body>
+</html>
