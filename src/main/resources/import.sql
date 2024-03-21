@@ -4,8 +4,8 @@ insert into area(name, description) values ('IT', 'Java');
 
 insert into people(name, email, username, password) values ('Ricardo', 'aa@gmail.com', 'ric', '{noop}123');
 insert into people(name, email, username, password) values ('Joao', 'jj@gmail.com', 'js', '{noop}456');
-insert into people(name, email, username, password) values ('Rafael', 'rr@gmail.com', 'rf', '890');
-insert into people(name, email, username, password) values ('José', 'js@gmail.com', 'jose', '321');
+insert into people(name, email, username, password) values ('Rafael', 'rr@gmail.com', 'rf', '{noop}890');
+insert into people(name, email, username, password) values ('José', 'js@gmail.com', 'jose', '{noop}321');
 
 insert into project(name, start_Date, end_Date, area_Id) values ('POC', '19/02/2024', '28/02/2024', 1);
 insert into project(name, start_Date, end_Date, area_Id) values ('Spring', '19/02/2024', '28/02/2024', 2);
