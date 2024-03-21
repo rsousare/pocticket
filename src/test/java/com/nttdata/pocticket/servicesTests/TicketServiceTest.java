@@ -103,7 +103,7 @@ public class TicketServiceTest {
 
     @Test
     public void getTopTicketsByCreationTest(){
-        People createdBy = new People(1L, "Nome", "email", new ArrayList<>());
+        People createdBy = new People(1L, "Nome", "email", "rr", "34", new ArrayList<>());
 
         List<Ticket> tickets = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public class TicketServiceTest {
 
     @Test
     public void getTopTicketsByResolutionTest(){
-        People resolvedBy = new People(1L, "Nome", "email", new ArrayList<>());
+        People resolvedBy = new People(1L, "Nome", "email", "ty", "22", new ArrayList<>());
 
         List<Ticket> tickets = new ArrayList<>();
 

@@ -2,8 +2,8 @@ insert into area(name, description) values ('IT', 'Informatica');
 insert into area(name, description) values ('IT', 'Network');
 insert into area(name, description) values ('IT', 'Java');
 
-insert into people(name, email, username, password) values ('Ricardo', 'aa@gmail.com', 'ric', '123');
-insert into people(name, email, username, password) values ('Joao', 'jj@gmail.com', 'js', '456');
+insert into people(name, email, username, password) values ('Ricardo', 'aa@gmail.com', 'ric', '{noop}123');
+insert into people(name, email, username, password) values ('Joao', 'jj@gmail.com', 'js', '{noop}456');
 insert into people(name, email, username, password) values ('Rafael', 'rr@gmail.com', 'rf', '890');
 insert into people(name, email, username, password) values ('José', 'js@gmail.com', 'jose', '321');
 

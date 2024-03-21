@@ -37,8 +37,8 @@ public class PeopleControllerTest {
             return new PeopleDTO(source.getId(), source.getName(), source.getEmail());
         });
 
-        People person1 = new People(1L, "Ricardo", "aa@sapo.pt", new ArrayList<>());
-        People person2 = new People(2L, "Maria", "mm@sapo.pt", new ArrayList<>());
+        People person1 = new People(1L, "Ricardo", "aa@sapo.pt", "ric", "123", new ArrayList<>());
+        People person2 = new People(2L, "Maria", "mm@sapo.pt", "mar", "123", new ArrayList<>());
         List<People> mockPeople = Arrays.asList(person1, person2);
         when(peopleService.getAllPeople()).thenReturn(mockPeople);
 
@@ -69,7 +69,7 @@ public class PeopleControllerTest {
     @Test
     public void createPeopleTest(){
         People peopleToCreate = new People();
-        People createdPeople = new People(1L, "New Person", "cc@gmail.com", new ArrayList<>());
+        People createdPeople = new People(1L, "New Person", "cc@gmail.com", "aa", "234", new ArrayList<>());
         when(peopleService.createPeople(peopleToCreate)).thenReturn(createdPeople);
 
         People returnedPeople = peopleController.createPeople(peopleToCreate);

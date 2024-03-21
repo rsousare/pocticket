@@ -22,9 +22,12 @@
     </style>
 </head>
 <body>
+<div th:if="${param.error}">
+    Invalid username or password.
+</div>
 <h2>Login</h2>
     <div class="form-container">
-    <form action="/login" method="post">
+    <form th:action="@{/login}" method="post">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>

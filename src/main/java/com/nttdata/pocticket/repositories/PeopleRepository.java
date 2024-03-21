@@ -11,4 +11,6 @@ public interface PeopleRepository extends JpaRepository<People, Long> {
     List<People> findByName(String name);
 
     People findByUsernameAndPassword(String username, String password);
+
+    People findByUsername(String username);
 }

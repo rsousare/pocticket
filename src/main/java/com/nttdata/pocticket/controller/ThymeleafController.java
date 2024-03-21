@@ -8,12 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class ThymeleafController {
 
     @Autowired
     private PeopleService peopleService;
+
 
     @GetMapping("/login")
     public String login(){
@@ -22,8 +25,10 @@ public class ThymeleafController {
 
     @PostMapping("/login")
     public String doLogin(HttpServletRequest request, Model model){
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+
         if (peopleService.isValidUser(username, password)){
             request.getSession().setAttribute("username", username);
             return "redirect:/home";
@@ -33,11 +38,18 @@ public class ThymeleafController {
         }
     }
 
+//    @GetMapping("/home")
+//    public String home(Model model){
+//        model.addAttribute("message", "Hello, Welcome!");
+//        return "home";
+//    }
+
     @GetMapping("/home")
-    public String home(HttpServletRequest request){
+    public String home(HttpServletRequest request, Model model){
         if (request.getSession().getAttribute("username") == null){
             return "redirect:/login";
         }else {
+            model.addAttribute("message", "Hello, Welcome!");
             return "home";
         }
     }

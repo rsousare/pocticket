@@ -29,8 +29,8 @@ public class PeopleServiceTest {
     @Test
     public void getAllPeopleTest(){
         List<People> mockPeopleList = new ArrayList<>();
-        mockPeopleList.add(new People(1L, "Nome", "email", new ArrayList<>()));
-        mockPeopleList.add(new People(2L, "Nome2", "email2", new ArrayList<>()));
+        mockPeopleList.add(new People(1L, "Nome", "email", "aa", "12", new ArrayList<>()));
+        mockPeopleList.add(new People(2L, "Nome2", "email2", "dd", "23", new ArrayList<>()));
         when(peopleRepository.findAll()).thenReturn(mockPeopleList);
 
         List<People> result = peopleService.getAllPeople();
@@ -43,7 +43,7 @@ public class PeopleServiceTest {
     @Test
     public void getPeopleByIdTest(){
         Long id = 1L;
-        People mockPeople = new People(1L, "Nome", "email", new ArrayList<>());
+        People mockPeople = new People(1L, "Nome", "email", "ee", "34", new ArrayList<>());
         when(peopleRepository.findById(id)).thenReturn(Optional.of(mockPeople));
 
         Optional<People> result = peopleService.getPeopleById(id);
@@ -55,7 +55,7 @@ public class PeopleServiceTest {
 
     @Test
     public void createPeopleTest(){
-        People mockPeople = new People(1L, "Nome", "email", new ArrayList<>());
+        People mockPeople = new People(1L, "Nome", "email", "df", "55", new ArrayList<>());
         when(peopleRepository.save(any(People.class))).thenReturn(mockPeople);
 
         People result = peopleService.createPeople(mockPeople);
@@ -68,7 +68,7 @@ public class PeopleServiceTest {
     public void updatePeopleTest(){
         Long existingPeopleId = 1L;
 
-        People updetedPeople = new People(existingPeopleId, "Nome1", "email1", new ArrayList<>());
+        People updetedPeople = new People(existingPeopleId, "Nome1", "email1", "ee", "67", new ArrayList<>());
 
         when(peopleRepository.findById(existingPeopleId)).thenReturn(Optional.empty());
 
