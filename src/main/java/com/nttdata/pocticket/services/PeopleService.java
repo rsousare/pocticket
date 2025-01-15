@@ -20,10 +20,10 @@ public class PeopleService {
     @Autowired
     private PeopleRepository peopleRepository;
 
-    public boolean isValidUser(String username, String password){
-        People user = peopleRepository.findByUsernameAndPassword(username, password);
-        return user != null;
-    }
+//    public boolean isValidUser(String username, String password){
+//        People user = peopleRepository.findByUsernameAndPassword(username, password);
+//        return user != null;
+//    }
 
     /**
      * Retrieves all people.

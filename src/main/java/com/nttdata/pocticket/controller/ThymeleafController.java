@@ -2,12 +2,10 @@ package com.nttdata.pocticket.controller;
 
 
 import com.nttdata.pocticket.services.PeopleService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -23,6 +21,30 @@ public class ThymeleafController {
         return "login";
     }
 
+    @GetMapping("/home")
+    public String home(Model model){
+        model.addAttribute("message", "Hello, Welcome!");
+        return "home";
+    }
+
+    @GetMapping("/menu")
+    public String getMenuPage(){
+        return "menu";
+    }
+
+    @GetMapping("/area")
+    public String getAreaPage(){ return "area";}
+
+    @GetMapping("/person")
+    public String getPeoplePage(){ return "person"; }
+
+    @GetMapping("/project")
+    public String getProjectPage(){ return "project"; }
+
+    @GetMapping("/ticket")
+    public String getTicketPage(){ return "ticket"; }
+
+    /*
     @PostMapping("/login")
     public String doLogin(HttpServletRequest request, Model model){
 
@@ -37,12 +59,6 @@ public class ThymeleafController {
             return "login";
         }
     }
-
-//    @GetMapping("/home")
-//    public String home(Model model){
-//        model.addAttribute("message", "Hello, Welcome!");
-//        return "home";
-//    }
 
     @GetMapping("/home")
     public String home(HttpServletRequest request, Model model){
@@ -100,5 +116,5 @@ public class ThymeleafController {
         }else {
             return "ticket";
         }
-    }
+    }*/
 }
